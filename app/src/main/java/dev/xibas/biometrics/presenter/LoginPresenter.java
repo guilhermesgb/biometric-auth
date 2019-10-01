@@ -5,14 +5,16 @@ import android.content.Context;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.FragmentActivity;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
-import dev.xibas.biometrics.model.BiometricAuthManagerImpl;
 import dev.xibas.biometrics.model.Manager;
-import dev.xibas.biometrics.model.util.BiometricAuthCompletionCallback;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManagerImpl;
+import dev.xibas.biometrics.model.biometric.util.BiometricAuthCompletionCallback;
+import dev.xibas.biometrics.model.login.MockLoginManager;
+import dev.xibas.biometrics.model.login.MockLoginManagerImpl;
 import dev.xibas.biometrics.presenter.proto.AbstractPresenter;
 import dev.xibas.biometrics.view.LoginView;
 
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_DATA_EXPIRED;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_DATA_EXPIRED;
 
 public class LoginPresenter extends AbstractPresenter<LoginView> implements Manager.ManagerListener {
 
@@ -20,6 +22,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
     private final BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow;
     private final BiometricPrompt.PromptInfo biometricPromptInfoRecurringFlow;
 
+    private final MockLoginManager mockLoginManager;
     private final BiometricAuthManager biometricAuthManager;
     private BiometricAuthManager.BiometricAuthStatusListener biometricAuthListener;
 
@@ -32,6 +35,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
                          BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow,
                          BiometricPrompt.PromptInfo biometricPromptInfoRecurringFlow) {
 
+        this.mockLoginManager = new MockLoginManagerImpl();
         this.biometricAuthManager = BiometricAuthManagerImpl.getInstance(context);
 
         this.fragmentActivity = fragmentActivity;
@@ -44,17 +48,47 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
 
     @Override
     protected void onViewAttached(LoginView view) {
-        this.biometricAuthManager.registerListener(this);
+        this.mockLoginManager.registerListener(this);
     }
 
     @Override
     protected void onViewDetached(LoginView view) {
-        this.biometricAuthManager.unregisterListener(this);
+        this.mockLoginManager.unregisterListener(this);
     }
 
     @Override
     public void onManagerUpdate(Manager manager) {
-        biometricAuthManager.getBiometricAuthStatus(biometricAuthListener);
+        if (manager == mockLoginManager) {
+            username = mockLoginManager.getLastKnownUsername();
+
+        } else if (manager == biometricAuthManager) {
+            biometricAuthManager.getBiometricAuthStatus(biometricAuthListener);
+        }
+    }
+
+    public void onSubmitLoginClicked(String username, String password) {
+        this.username = username;
+        this.password = password;
+
+        submitToMockLoginManager(username, password);
+    }
+
+    private void submitToMockLoginManager(String username, String password) {
+        mockLoginManager.submitLogin(username, password, new MockLoginManager.LoginCallback() {
+            @Override
+            public void loginOperationSuccess() {
+                onLoginSuccessful();
+            }
+
+            @Override
+            public void loginOperationFailure() {
+
+                LoginView view = getView();
+                if (view != null) {
+                    view.showLoginFailed();
+                }
+            }
+        });
     }
 
     private void onLoginSuccessful() {
@@ -156,7 +190,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
                                         biometricAuthManager.unregisterListener(LoginPresenter.this);
                                         biometricAuthAttemptDisabled = true;
 
-                                        //SKIP LOGIN HERE USING (username, password)
+                                        submitToMockLoginManager(username, password);
                                     }
 
                                     @Override

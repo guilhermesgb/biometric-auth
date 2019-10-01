@@ -1,6 +1,6 @@
-package dev.xibas.biometrics.model.util;
+package dev.xibas.biometrics.model.biometric.util;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
 
 public abstract class BiometricAuthCompletionCallback implements BiometricAuthManager.BiometricAuthCallback {
     public abstract void onAuthCompletion();

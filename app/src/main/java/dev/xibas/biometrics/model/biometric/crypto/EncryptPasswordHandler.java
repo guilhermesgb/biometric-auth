@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.model.crypto;
+package dev.xibas.biometrics.model.biometric.crypto;
 
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -13,11 +13,11 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
 import timber.log.Timber;
 
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_EXE_ENCRYPTION;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_STORE_SECURELY;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.UNABLE_TO_EXE_ENCRYPTION;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.UNABLE_TO_STORE_SECURELY;
 
 public class EncryptPasswordHandler extends CryptoPasswordHandler {
 

@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.model;
+package dev.xibas.biometrics.model.biometric;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,20 +20,20 @@ import java.security.UnrecoverableKeyException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import dev.xibas.biometrics.model.crypto.CryptoPasswordHandler;
-import dev.xibas.biometrics.model.crypto.DecryptPasswordHandler;
-import dev.xibas.biometrics.model.crypto.EncryptPasswordHandler;
+import dev.xibas.biometrics.model.biometric.crypto.CryptoPasswordHandler;
+import dev.xibas.biometrics.model.biometric.crypto.DecryptPasswordHandler;
+import dev.xibas.biometrics.model.biometric.crypto.EncryptPasswordHandler;
+import dev.xibas.biometrics.model.biometric.util.PasswordHandlerHelper;
 import dev.xibas.biometrics.model.proto.AbstractManager;
-import dev.xibas.biometrics.model.util.PasswordHandlerHelper;
 import timber.log.Timber;
 
 import static android.Manifest.permission.USE_FINGERPRINT;
 import static androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE;
 import static androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_DATA_EXPIRED;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_INIT_DECRYPTION;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_INIT_ENCRYPTION;
-import static dev.xibas.biometrics.model.crypto.CryptoPasswordHandler.SUFFIX_STORED_PASSWORD;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_DATA_EXPIRED;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.UNABLE_TO_INIT_DECRYPTION;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.UNABLE_TO_INIT_ENCRYPTION;
+import static dev.xibas.biometrics.model.biometric.crypto.CryptoPasswordHandler.SUFFIX_STORED_PASSWORD;
 
 public class BiometricAuthManagerImpl extends AbstractManager implements BiometricAuthManager {
 

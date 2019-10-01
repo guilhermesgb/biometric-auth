@@ -2,8 +2,8 @@ package dev.xibas.biometrics.presenter;
 
 import android.content.Context;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
-import dev.xibas.biometrics.model.BiometricAuthManagerImpl;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManagerImpl;
 import dev.xibas.biometrics.model.Manager;
 import dev.xibas.biometrics.presenter.proto.AbstractPresenter;
 import dev.xibas.biometrics.view.SettingsView;

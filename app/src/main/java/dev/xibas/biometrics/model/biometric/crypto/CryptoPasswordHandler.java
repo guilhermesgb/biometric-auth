@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.model.crypto;
+package dev.xibas.biometrics.model.biometric.crypto;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -8,13 +8,13 @@ import androidx.biometric.BiometricPrompt;
 
 import javax.crypto.Cipher;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
 import timber.log.Timber;
 
 import static androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON;
 import static androidx.biometric.BiometricConstants.ERROR_USER_CANCELED;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_EXE_ERROR;
-import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_FIND_CRYPTO_DATA;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_EXE_ERROR;
+import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.UNABLE_TO_FIND_CRYPTO_DATA;
 
 public abstract class CryptoPasswordHandler extends BiometricPrompt.AuthenticationCallback {
 

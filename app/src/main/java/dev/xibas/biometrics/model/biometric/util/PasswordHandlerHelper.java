@@ -1,11 +1,11 @@
-package dev.xibas.biometrics.model.util;
+package dev.xibas.biometrics.model.biometric.util;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
 
-import dev.xibas.biometrics.model.BiometricAuthManager;
-import dev.xibas.biometrics.model.crypto.DecryptPasswordHandler;
-import dev.xibas.biometrics.model.crypto.EncryptPasswordHandler;
+import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
+import dev.xibas.biometrics.model.biometric.crypto.DecryptPasswordHandler;
+import dev.xibas.biometrics.model.biometric.crypto.EncryptPasswordHandler;
 
 public class PasswordHandlerHelper {
 

@@ -10,4 +10,5 @@ public interface LoginView {
 
     void showBiometricAuthError();
 
+    void showLoginFailed();
 }
