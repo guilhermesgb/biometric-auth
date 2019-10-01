@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import dev.xibas.biometrics.model.crypto.CryptoPasswordHandler;
 import dev.xibas.biometrics.model.crypto.DecryptPasswordHandler;
 import dev.xibas.biometrics.model.crypto.EncryptPasswordHandler;
+import dev.xibas.biometrics.model.proto.AbstractManager;
 import dev.xibas.biometrics.model.util.PasswordHandlerHelper;
 import timber.log.Timber;
 
@@ -34,9 +35,11 @@ import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError
 import static dev.xibas.biometrics.model.BiometricAuthManager.BiometricAuthError.UNABLE_TO_INIT_ENCRYPTION;
 import static dev.xibas.biometrics.model.crypto.CryptoPasswordHandler.SUFFIX_STORED_PASSWORD;
 
-public class BiometricAuthManagerImpl implements BiometricAuthManager {
+public class BiometricAuthManagerImpl extends AbstractManager implements BiometricAuthManager {
 
     private static final String BIOMETRIC_AUTH_ENABLED = "_biometric_auth_enabled_";
+
+    private static BiometricAuthManager instance;
 
     private final Context context;
 
@@ -49,7 +52,14 @@ public class BiometricAuthManagerImpl implements BiometricAuthManager {
     private boolean biometricAuthEnabled;
     private int biometricAuthSupportFlag;
 
-    public BiometricAuthManagerImpl(Context context) {
+    public static BiometricAuthManager getInstance(Context context) {
+        if (instance == null) {
+            instance = new BiometricAuthManagerImpl(context);
+        }
+        return instance;
+    }
+
+    private BiometricAuthManagerImpl(Context context) {
         this.context = context;
 
         if (checkSecureStorageSupport()) {
@@ -90,6 +100,8 @@ public class BiometricAuthManagerImpl implements BiometricAuthManager {
             listener.onBiometricAuthStatusUpdated
                     (false, false);
         }
+
+        notifyUpdate();
     }
 
     private boolean checkBiometricAuthSupport() {
@@ -152,6 +164,9 @@ public class BiometricAuthManagerImpl implements BiometricAuthManager {
         } catch (Exception exception) {
             Timber.e("Biometric Auth error: Biometric prompt init failure: %s", exception.getMessage());
             mainThread.post(() -> callback.onAuthError(UNABLE_TO_INIT_ENCRYPTION));
+
+        } finally {
+            notifyUpdate();
         }
     }
 
@@ -176,6 +191,9 @@ public class BiometricAuthManagerImpl implements BiometricAuthManager {
         } catch (Exception exception) {
             Timber.e("Biometric Auth error: Biometric prompt init failure: %s", exception.getMessage());
             mainThread.post(() -> callback.onAuthError(UNABLE_TO_INIT_DECRYPTION));
+
+        } finally {
+            notifyUpdate();
         }
     }
 
@@ -189,6 +207,7 @@ public class BiometricAuthManagerImpl implements BiometricAuthManager {
         return new BiometricPrompt.CryptoObject(passwordHandler.obtainCipher());
     }
 
+    @Override
     public void wipeEncryptedUserPasswordWithBiometricAuth(String username, BiometricAuthCallback callback) {
         DecryptPasswordHandler decryptPasswordHandler = passwordHandlerHelper
                 .obtainDecryptHandler(username, callback);

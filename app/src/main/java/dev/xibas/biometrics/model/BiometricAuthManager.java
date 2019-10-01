@@ -3,7 +3,7 @@ package dev.xibas.biometrics.model;
 import androidx.biometric.BiometricPrompt;
 import androidx.fragment.app.FragmentActivity;
 
-public interface BiometricAuthManager {
+public interface BiometricAuthManager extends Manager {
 
     /*
         Biometric authentication ACTIVATION-related classes and methods
