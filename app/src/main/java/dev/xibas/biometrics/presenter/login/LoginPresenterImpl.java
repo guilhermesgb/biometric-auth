@@ -94,12 +94,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
 
     private void onLoginSuccessful() {
         if (biometricAuthAttemptDisabled) {
-            LoginView view = getView();
-            if (view != null) {
-                return;
-            }
-
-            routeToPrivateArea(view);
+            routeToPrivateArea();
 
         } else {
             biometricAuthListener = new NewPlayerAuthListener();
@@ -149,14 +144,14 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
         biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
         biometricAuthAttemptDisabled = true;
 
-        LoginView view = getView();
-        if (view != null) {
-            routeToPrivateArea(view);
-        }
+        routeToPrivateArea();
     }
 
-    private void routeToPrivateArea(LoginView view) {
-
+    private void routeToPrivateArea() {
+        LoginView view = getView();
+        if (view != null) {
+            view.openPrivateArea();
+        }
     }
 
     class NewPlayerAuthListener implements BiometricAuthManager.BiometricAuthStatusListener {
@@ -174,7 +169,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
 
                 LoginView view = getView();
                 if (view != null) {
-                    routeToPrivateArea(view);
+                    routeToPrivateArea();
                 }
             }
         }
