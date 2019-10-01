@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.presenter;
+package dev.xibas.biometrics.presenter.login;
 
 import android.content.Context;
 
@@ -16,7 +16,7 @@ import dev.xibas.biometrics.view.LoginView;
 
 import static dev.xibas.biometrics.model.biometric.BiometricAuthManager.BiometricAuthError.BIOMETRIC_AUTH_DATA_EXPIRED;
 
-public class LoginPresenter extends AbstractPresenter<LoginView> implements Manager.ManagerListener {
+public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements LoginPresenter {
 
     private final FragmentActivity fragmentActivity;
     private final BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow;
@@ -31,9 +31,9 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
     private String username;
     private String password;
 
-    public LoginPresenter(Context context, FragmentActivity fragmentActivity,
-                         BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow,
-                         BiometricPrompt.PromptInfo biometricPromptInfoRecurringFlow) {
+    public LoginPresenterImpl(Context context, FragmentActivity fragmentActivity,
+                              BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow,
+                              BiometricPrompt.PromptInfo biometricPromptInfoRecurringFlow) {
 
         this.mockLoginManager = new MockLoginManagerImpl();
         this.biometricAuthManager = BiometricAuthManagerImpl.getInstance(context);
@@ -66,6 +66,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
         }
     }
 
+    @Override
     public void onSubmitLoginClicked(String username, String password) {
         this.username = username;
         this.password = password;
@@ -106,6 +107,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
         }
     }
 
+    @Override
     public void onUseBiometricAuthClicked() {
         final LoginView view = getView();
         if (view != null) {
@@ -122,6 +124,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
                         });
     }
 
+    @Override
     public void onDoNotUseBiometricAuthClicked() {
         LoginView view = getView();
         if (view != null) {
@@ -131,6 +134,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
         unregisterBiometricManagerAndRouteToLobby();
     }
 
+    @Override
     public void onDisableBiometricAuthClicked() {
         final LoginView view = getView();
         if (view != null) {
@@ -142,7 +146,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
     }
 
     private void unregisterBiometricManagerAndRouteToLobby() {
-        biometricAuthManager.unregisterListener(LoginPresenter.this);
+        biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
         biometricAuthAttemptDisabled = true;
 
         LoginView view = getView();
@@ -165,7 +169,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
                 }
 
             } else {
-                biometricAuthManager.unregisterListener(LoginPresenter.this);
+                biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
                 biometricAuthAttemptDisabled = true;
 
                 LoginView view = getView();
@@ -187,7 +191,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
                                 new BiometricAuthManager.BiometricAuthCallback() {
                                     @Override
                                     public void onAuthSuccess(String username, String password) {
-                                        biometricAuthManager.unregisterListener(LoginPresenter.this);
+                                        biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
                                         biometricAuthAttemptDisabled = true;
 
                                         submitToMockLoginManager(username, password);
@@ -195,7 +199,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
 
                                     @Override
                                     public void onAuthFailure() {
-                                        biometricAuthManager.unregisterListener(LoginPresenter.this);
+                                        biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
                                         biometricAuthAttemptDisabled = true;
 
                                         LoginView view = getView();
@@ -206,7 +210,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
 
                                     @Override
                                     public void onAuthError(BiometricAuthManager.BiometricAuthError error) {
-                                        biometricAuthManager.unregisterListener(LoginPresenter.this);
+                                        biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
 
                                         if (error != BIOMETRIC_AUTH_DATA_EXPIRED) {
                                             biometricAuthAttemptDisabled = true;
@@ -220,13 +224,13 @@ public class LoginPresenter extends AbstractPresenter<LoginView> implements Mana
 
                                     @Override
                                     public void onAuthCancel() {
-                                        biometricAuthManager.unregisterListener(LoginPresenter.this);
+                                        biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
                                         biometricAuthAttemptDisabled = true;
                                     }
                                 });
 
             } else {
-                biometricAuthManager.unregisterListener(LoginPresenter.this);
+                biometricAuthManager.unregisterListener(LoginPresenterImpl.this);
             }
         }
     }
