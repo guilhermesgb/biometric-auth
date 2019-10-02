@@ -24,7 +24,7 @@ import dev.xibas.biometrics.model.biometric.crypto.CryptoPasswordHandler;
 import dev.xibas.biometrics.model.biometric.crypto.DecryptPasswordHandler;
 import dev.xibas.biometrics.model.biometric.crypto.EncryptPasswordHandler;
 import dev.xibas.biometrics.model.biometric.util.PasswordHandlerHelper;
-import dev.xibas.biometrics.model.proto.AbstractManager;
+import dev.xibas.biometrics.model.AbstractManager;
 import timber.log.Timber;
 
 import static android.Manifest.permission.USE_FINGERPRINT;

@@ -3,7 +3,7 @@ package dev.xibas.biometrics.model.login;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import dev.xibas.biometrics.model.proto.AbstractManager;
+import dev.xibas.biometrics.model.AbstractManager;
 
 public class MockLoginManagerImpl extends AbstractManager implements MockLoginManager {
 

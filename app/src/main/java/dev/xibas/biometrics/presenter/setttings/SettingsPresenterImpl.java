@@ -5,7 +5,7 @@ import android.content.Context;
 import dev.xibas.biometrics.model.Manager;
 import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
 import dev.xibas.biometrics.model.biometric.BiometricAuthManagerImpl;
-import dev.xibas.biometrics.presenter.proto.AbstractPresenter;
+import dev.xibas.biometrics.presenter.AbstractPresenter;
 import dev.xibas.biometrics.view.SettingsView;
 
 import static android.hardware.biometrics.BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE;

@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.model.proto;
+package dev.xibas.biometrics.model;
 
 import java.util.Map;
 import java.util.WeakHashMap;

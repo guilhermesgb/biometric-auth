@@ -1,4 +1,4 @@
-package dev.xibas.biometrics.presenter.proto;
+package dev.xibas.biometrics.presenter;
 
 public interface Presenter<V> {
 
