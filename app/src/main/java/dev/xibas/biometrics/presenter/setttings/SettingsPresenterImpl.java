@@ -74,7 +74,7 @@ public class SettingsPresenterImpl extends AbstractPresenter<SettingsView> imple
             return;
         }
 
-        view.closeBiometricAuthActivationDialog();
+        view.closeBiometricAuthDialog();
         view.openSecuritySettings();
     }
 
@@ -85,7 +85,7 @@ public class SettingsPresenterImpl extends AbstractPresenter<SettingsView> imple
             return;
         }
 
-        view.closeBiometricAuthActivationDialog();
+        view.closeBiometricAuthDialog();
     }
 
 }

@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 import dev.xibas.biometrics.model.Manager;
 import dev.xibas.biometrics.model.biometric.BiometricAuthManager;
 import dev.xibas.biometrics.model.biometric.BiometricAuthManagerImpl;
-import dev.xibas.biometrics.model.biometric.util.BiometricAuthCompletionCallback;
 import dev.xibas.biometrics.model.login.MockLoginManager;
 import dev.xibas.biometrics.model.login.MockLoginManagerImpl;
 import dev.xibas.biometrics.presenter.proto.AbstractPresenter;
@@ -35,15 +34,12 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
                               BiometricPrompt.PromptInfo biometricPromptInfoNewUserFlow,
                               BiometricPrompt.PromptInfo biometricPromptInfoRecurringFlow) {
 
-        this.mockLoginManager = new MockLoginManagerImpl();
+        this.mockLoginManager = MockLoginManagerImpl.getInstance(context);
         this.biometricAuthManager = BiometricAuthManagerImpl.getInstance(context);
 
         this.fragmentActivity = fragmentActivity;
         this.biometricPromptInfoNewUserFlow = biometricPromptInfoNewUserFlow;
         this.biometricPromptInfoRecurringFlow = biometricPromptInfoRecurringFlow;
-
-        this.biometricAuthListener = new RecurringPlayerAuthListener();
-        this.biometricAuthManager.registerListener(this);
     }
 
     @Override
@@ -60,6 +56,14 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
     public void onManagerUpdate(Manager manager) {
         if (manager == mockLoginManager) {
             username = mockLoginManager.getLastKnownUsername();
+
+            LoginView view = getView();
+            if (view != null) {
+                view.fillUsername(username);
+            }
+
+            this.biometricAuthListener = new RecurringPlayerAuthListener();
+            this.biometricAuthManager.registerListener(this);
 
         } else if (manager == biometricAuthManager) {
             biometricAuthManager.getBiometricAuthStatus(biometricAuthListener);
@@ -111,9 +115,30 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
 
         biometricAuthManager.encryptUserPasswordWithBiometricAuth
                 (username, password, fragmentActivity, biometricPromptInfoNewUserFlow,
-                        new BiometricAuthCompletionCallback() {
+                        new BiometricAuthManager.BiometricAuthCallback() {
                             @Override
-                            public void onAuthCompletion() {
+                            public void onAuthSuccess(String username, String password) {
+                                unregisterBiometricManagerAndRouteToLobby();
+                            }
+
+                            @Override
+                            public void onAuthFailure() {
+                                LoginView view = getView();
+                                if (view != null) {
+                                    view.showBiometricAuthFailure();
+                                }
+                            }
+
+                            @Override
+                            public void onAuthError(BiometricAuthManager.BiometricAuthError error) {
+                                LoginView view = getView();
+                                if (view != null) {
+                                    view.showBiometricAuthError();
+                                }
+                            }
+
+                            @Override
+                            public void onAuthCancel() {
                                 unregisterBiometricManagerAndRouteToLobby();
                             }
                         });

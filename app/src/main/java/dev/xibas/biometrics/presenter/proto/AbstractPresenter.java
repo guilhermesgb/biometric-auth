@@ -2,10 +2,11 @@ package dev.xibas.biometrics.presenter.proto;
 
 import java.lang.ref.WeakReference;
 
-public abstract class AbstractPresenter<V> {
+public abstract class AbstractPresenter<V> implements Presenter<V> {
 
     private WeakReference<V> view;
 
+    @Override
     public void attachView(V view) {
         this.view = new WeakReference<>(view);
         onViewAttached(view);

@@ -10,7 +10,7 @@ public interface SettingsView {
 
     void showBiometricAuthActivationDialog();
 
-    void closeBiometricAuthActivationDialog();
+    void closeBiometricAuthDialog();
 
     void openSecuritySettings();
 

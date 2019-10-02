@@ -164,9 +164,6 @@ public class BiometricAuthManagerImpl extends AbstractManager implements Biometr
         } catch (Exception exception) {
             Timber.e("Biometric Auth error: Biometric prompt init failure: %s", exception.getMessage());
             mainThread.post(() -> callback.onAuthError(UNABLE_TO_INIT_ENCRYPTION));
-
-        } finally {
-            notifyUpdate();
         }
     }
 
@@ -191,9 +188,6 @@ public class BiometricAuthManagerImpl extends AbstractManager implements Biometr
         } catch (Exception exception) {
             Timber.e("Biometric Auth error: Biometric prompt init failure: %s", exception.getMessage());
             mainThread.post(() -> callback.onAuthError(UNABLE_TO_INIT_DECRYPTION));
-
-        } finally {
-            notifyUpdate();
         }
     }
 
