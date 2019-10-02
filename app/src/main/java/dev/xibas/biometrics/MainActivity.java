@@ -184,12 +184,12 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Log
     }
 
     @Override
-    public void showBiometricAuthFailure() {
+    public void showBiometricAuthEncryptionFailure() {
         closeBiometricAuthDialog();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_biometric_auth_error_title)
-                .setMessage(R.string.dialog_biometric_auth_execution_failure)
+                .setMessage(R.string.dialog_biometric_auth_encryption_failure)
                 .setPositiveButton(R.string.dialog_button_confirm, (dialog, which) -> dialog.dismiss())
                 .setOnCancelListener(DialogInterface::dismiss);
 
@@ -198,12 +198,40 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Log
     }
 
     @Override
-    public void showBiometricAuthError() {
+    public void showBiometricAuthEncryptionError() {
         closeBiometricAuthDialog();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_biometric_auth_error_title)
-                .setMessage(R.string.dialog_biometric_auth_execution_error)
+                .setMessage(R.string.dialog_biometric_auth_encryption_error)
+                .setPositiveButton(R.string.dialog_button_confirm, (dialog, which) -> dialog.dismiss())
+                .setOnCancelListener(DialogInterface::dismiss);
+
+        biometricAuthDialog = builder.create();
+        biometricAuthDialog.show();
+    }
+
+    @Override
+    public void showBiometricAuthDecryptionFailure() {
+        closeBiometricAuthDialog();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_biometric_auth_error_title)
+                .setMessage(R.string.dialog_biometric_auth_decryption_failure)
+                .setPositiveButton(R.string.dialog_button_confirm, (dialog, which) -> dialog.dismiss())
+                .setOnCancelListener(DialogInterface::dismiss);
+
+        biometricAuthDialog = builder.create();
+        biometricAuthDialog.show();
+    }
+
+    @Override
+    public void showBiometricAuthDecryptionError() {
+        closeBiometricAuthDialog();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_biometric_auth_error_title)
+                .setMessage(R.string.dialog_biometric_auth_decryption_error)
                 .setPositiveButton(R.string.dialog_button_confirm, (dialog, which) -> dialog.dismiss())
                 .setOnCancelListener(DialogInterface::dismiss);
 

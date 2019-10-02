@@ -8,9 +8,13 @@ public interface LoginView {
 
     void closeBiometricAuthDialog();
 
-    void showBiometricAuthFailure();
+    void showBiometricAuthEncryptionFailure();
 
-    void showBiometricAuthError();
+    void showBiometricAuthEncryptionError();
+
+    void showBiometricAuthDecryptionFailure();
+
+    void showBiometricAuthDecryptionError();
 
     void showLoginFailed();
 

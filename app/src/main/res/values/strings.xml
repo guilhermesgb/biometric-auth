@@ -9,13 +9,15 @@
     <string name="dialog_biometric_auth_hardware_unavailable">Your biometric hardware is currently busy. Please try enabling Biometric authentication again later.</string>
     <string name="dialog_biometric_auth_user_not_enrolled">To enable Biometric authentication for this App, first enable it in your Android phone.\nWe\'ll redirect you to your phone\'s security settings. To enable you must enroll at least one fingerprint.</string>
 
-    <string name="dialog_biometric_auth_execution_failure">Biometric authentication failed. Please try signing-in again using your password.</string>
-    <string name="dialog_biometric_auth_execution_error">An error occurred while performing Biometric authentication. Please try signing-in again using your password.</string>
     <string name="dialog_biometric_auth_enable_title">Want to use Biometric authentication?</string>
     <string name="dialog_biometric_auth_enable_message">Using Biometric authentication, we\'ll securely store your password in encrypted form in your device so you can re-login back using your fingerprint.</string>
     <string name="prompt_biometric_auth_title">Biometric Authentication</string>
     <string name="prompt_biometric_auth_new_user_message">If successful, we\'ll securely save your password in encrypted form.</string>
+    <string name="dialog_biometric_auth_encryption_failure">Biometric authentication failed. Please try again, or hit cancel if you no longer with to use Biometric authentication.</string>
+    <string name="dialog_biometric_auth_encryption_error">An error occurred while performing Biometric authentication. Please try again, or hit cancel if you no longer with to use Biometric authentication.</string>
     <string name="prompt_biometric_auth_recurring_message">If successful, we\'ll restore and decrypt your securely stored password.</string>
+    <string name="dialog_biometric_auth_decryption_failure">Biometric authentication failed. Please try signing-in again using your password.</string>
+    <string name="dialog_biometric_auth_decryption_error">An error occurred while performing Biometric authentication. Please try signing-in again using your password.</string>
 
     <string name="dialog_login_failure_title">Login failed</string>
     <string name="dialog_login_failure_message">Login operation has failed. Wrong username or password.</string>

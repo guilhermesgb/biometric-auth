@@ -125,7 +125,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
                             public void onAuthFailure() {
                                 LoginView view = getView();
                                 if (view != null) {
-                                    view.showBiometricAuthFailure();
+                                    view.showBiometricAuthEncryptionFailure();
                                 }
                             }
 
@@ -133,7 +133,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
                             public void onAuthError(BiometricAuthManager.BiometricAuthError error) {
                                 LoginView view = getView();
                                 if (view != null) {
-                                    view.showBiometricAuthError();
+                                    view.showBiometricAuthEncryptionError();
                                 }
                             }
 
@@ -224,7 +224,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
 
                                         LoginView view = getView();
                                         if (view != null) {
-                                            view.showBiometricAuthFailure();
+                                            view.showBiometricAuthDecryptionFailure();
                                         }
                                     }
 
@@ -237,7 +237,7 @@ public class LoginPresenterImpl extends AbstractPresenter<LoginView> implements 
 
                                             LoginView view = getView();
                                             if (view != null) {
-                                                view.showBiometricAuthError();
+                                                view.showBiometricAuthDecryptionError();
                                             }
                                         }
                                     }
