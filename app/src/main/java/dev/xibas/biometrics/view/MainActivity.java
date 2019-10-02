@@ -1,4 +1,4 @@
-package dev.xibas.biometrics;
+package dev.xibas.biometrics.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,12 +15,11 @@ import androidx.biometric.BiometricPrompt;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dev.xibas.biometrics.R;
 import dev.xibas.biometrics.presenter.login.LoginPresenter;
 import dev.xibas.biometrics.presenter.login.LoginPresenterImpl;
 import dev.xibas.biometrics.presenter.setttings.SettingsPresenter;
 import dev.xibas.biometrics.presenter.setttings.SettingsPresenterImpl;
-import dev.xibas.biometrics.view.LoginView;
-import dev.xibas.biometrics.view.SettingsView;
 
 public class MainActivity extends AppCompatActivity implements SettingsView, LoginView {
 
